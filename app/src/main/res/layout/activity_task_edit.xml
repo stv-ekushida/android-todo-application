@@ -84,5 +84,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/deleteButton"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorAccent"
+        android:onClick="onDeleteTapped" />
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class TaskEditActivity extends AppCompatActivity {
     EditText mDeadlineEdit;
     EditText mTitleEdit;
     EditText mDetailEdit;
+    Button mDeleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class TaskEditActivity extends AppCompatActivity {
         mDeadlineEdit = (EditText)findViewById(R.id.deadlineEdit);
         mTitleEdit = (EditText)findViewById(R.id.titleEdit);
         mDetailEdit = (EditText)findViewById(R.id.detailEdit);
+        mDeleteButton = (Button)findViewById(R.id.deleteButton);
 
         long taskId = getIntent().getLongExtra("task_id", -1);
         if (taskId != -1) {
@@ -44,6 +47,9 @@ public class TaskEditActivity extends AppCompatActivity {
             mDeadlineEdit.setText(date);
             mTitleEdit.setText(task.getTitle());
             mDetailEdit.setText(task.getDetail());
+            mDeleteButton.setVisibility(View.VISIBLE);
+        } else {
+            mDeleteButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -110,5 +116,22 @@ public class TaskEditActivity extends AppCompatActivity {
             Toast.makeText(this, "登録しました。", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    public void onDeleteTapped(View view) {
+
+        long taskId = getIntent().getLongExtra("task_id", -1);
+
+        if(taskId != -1) {
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
+            Realm realm = Realm.getInstance(realmConfig);
+            RealmResults<Task> results = realm.where(Task.class).equalTo("id", taskId).findAll();
+            realm.beginTransaction();
+            results.deleteFromRealm(0);
+            realm.commitTransaction();
+
+            Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show();
+        }
+        finish();
     }
 }

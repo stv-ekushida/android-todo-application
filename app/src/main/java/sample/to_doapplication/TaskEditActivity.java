@@ -19,10 +19,10 @@ import io.realm.RealmResults;
 
 public class TaskEditActivity extends AppCompatActivity {
 
-    EditText mDeadlineEdit;
-    EditText mTitleEdit;
-    EditText mDetailEdit;
-    Button mDeleteButton;
+    private EditText mDeadlineEdit;
+    private EditText mTitleEdit;
+    private EditText mDetailEdit;
+    private Button mDeleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,8 @@ public class TaskEditActivity extends AppCompatActivity {
             RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
             Realm realm = Realm.getInstance(realmConfig);
 
-            RealmResults<Task> results = realm.where(Task.class).equalTo("id", taskId).findAll();
+            RealmResults<Task> results = realm.where(Task.class)
+                    .equalTo("id", taskId).findAll();
             Task task = results.first();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String date = sdf.format(task.getDeadline());
@@ -78,7 +79,7 @@ public class TaskEditActivity extends AppCompatActivity {
             task.setDeadline(deadline);
             task.setTitle(mTitleEdit.getText().toString());
             task.setDetail(mDetailEdit.getText().toString());
-            realm.commitTransaction();;
+            realm.commitTransaction();
 
             Snackbar.make(findViewById(android.R.id.content),
                     "更新しました。",

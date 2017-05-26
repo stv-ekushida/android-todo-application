@@ -16,7 +16,7 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView mListView;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //TODO
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
         Realm realm = Realm.getInstance(realmConfig);
 

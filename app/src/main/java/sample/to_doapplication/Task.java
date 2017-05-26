@@ -15,7 +15,7 @@ public class Task extends RealmObject {
     private long id;
     private Date deadline;
     private String title;
-    private String detal;
+    private String detail;
 
     public long getId() {
         return id;
@@ -41,11 +41,11 @@ public class Task extends RealmObject {
         this.title = title;
     }
 
-    public String getDetal() {
-        return detal;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setDetal(String detal) {
-        this.detal = detal;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
